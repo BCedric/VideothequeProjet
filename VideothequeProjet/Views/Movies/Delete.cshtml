@@ -1,0 +1,71 @@
+﻿@model VideothequeProjet.Models.Movies
+
+@{
+    ViewBag.Title = "Suppression "+Model.title;
+}
+
+<h3>Etes-vous sûr de vouloir supprimer ce film ?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        <dt>
+            Titre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            Synopsis
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.synopsis)
+        </dd>
+
+        <dt>
+            Durée
+        </dt>
+
+        <dd>
+            @{
+                int h = (int)(Model.duration / 60);
+                int m = (int)Model.duration % 60;
+
+            }
+            @h
+            h
+            @m
+        </dd>
+
+        <dt>
+            Année de sortie
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.year)
+        </dd>
+
+        <dt>
+            Note
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.note)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

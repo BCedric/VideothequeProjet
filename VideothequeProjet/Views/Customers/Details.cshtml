@@ -1,0 +1,114 @@
+﻿@model VideothequeProjet.Models.Customers
+
+@{
+    ViewBag.Title = "Client "+@Model.firstName+" "+@Model.lastName;
+}
+
+<div>
+    
+        <h1>@Html.DisplayFor(model => model.firstName)
+            @Html.DisplayFor(model => model.lastName)
+        </h1>
+        <p>@Html.DisplayFor(model => model.address)</p>
+        <p>@Html.DisplayFor(model => model.phoneNumber)</p>
+        <p>@Html.DisplayFor(model => model.mailAddress)</p>
+
+    
+        <a href='@Url.Content("~/Rentings/Create/"+Model.customerID)'>Ajouter une nouvelle location</a>
+
+        <h2>Locations en cours</h2>
+
+
+    <table class="table">
+        <tr>
+
+            <th>
+               Film
+            </th>
+            <th>
+               Date de près
+            </th>
+            <th>
+                Date de retour prévu
+            </th>            
+        </tr>
+
+        @foreach (var renting in Model.Rentings)
+        {
+            foreach (var rd in renting.RentingDetails)
+            {
+                if (!rd.back)
+                {
+                    <tr>
+
+                        <td>
+                            @rd.DVD.Movies.title
+                        </td>
+                        <td>
+                            @renting.dateStart
+                        </td>
+                        <td>
+                            @renting.dateEnd;
+                        </td>
+
+                    </tr>
+                }
+
+            }
+        }
+
+    </table>
+
+
+
+
+
+
+
+    <h2>Films loués</h2>
+
+    <table class="table">
+        <tr>
+
+            <th>
+                Film
+            </th>
+            <th>
+                Date de près
+            </th>
+            <th>
+                Date de retour
+            </th>
+        </tr>
+
+        @foreach (var renting in Model.Rentings)
+        {
+            foreach (var rd in renting.RentingDetails)
+            {                
+                if (rd.back)
+                {
+                    <tr>
+
+                        <td>
+                            @rd.DVD.Movies.title
+                        </td>
+                        <td>
+                            @renting.dateStart.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @renting.dateEnd
+                        </td>
+
+                    </tr>
+                }
+
+            }
+        }
+
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

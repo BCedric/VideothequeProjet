@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjetVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actors">
+          <Key>
+            <PropertyRef Name="actorID" />
+          </Key>
+          <Property Name="actorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="iconURL" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ActorsMovie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="ActorID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="ActorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="mailAddress" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Directors">
+          <Key>
+            <PropertyRef Name="directorID" />
+          </Key>
+          <Property Name="directorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="iconURL" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DirectorsMovie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="DirectorID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="DirectorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DVD">
+          <Key>
+            <PropertyRef Name="DVDID" />
+          </Key>
+          <Property Name="DVDID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="movieID" Type="int" Nullable="false" />
+          <Property Name="available" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FilmTypes">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="filmType" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="movieID" />
+          </Key>
+          <Property Name="movieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="synopsis" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="duration" Type="int" />
+          <Property Name="year" Type="int" />
+          <Property Name="note" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RentingDetails">
+          <Key>
+            <PropertyRef Name="RentingDetailsID" />
+          </Key>
+          <Property Name="RentingDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DVDID" Type="int" Nullable="false" />
+          <Property Name="rentingID" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="back" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rentings">
+          <Key>
+            <PropertyRef Name="rentingID" />
+          </Key>
+          <Property Name="rentingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerID" Type="int" Nullable="false" />
+          <Property Name="adminID" Type="int" Nullable="false" />
+          <Property Name="dateStart" Type="date" Nullable="false" />
+          <Property Name="dateEnd" Type="date" />
+          <Property Name="cost" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeMovie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="typeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ActorsMovieActor">
+          <End Role="Actors" Type="Self.Actors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActorsMovie" Type="Self.ActorsMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actors">
+              <PropertyRef Name="actorID" />
+            </Principal>
+            <Dependent Role="ActorsMovie">
+              <PropertyRef Name="ActorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActorsMovieMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActorsMovie" Type="Self.ActorsMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movieID" />
+            </Principal>
+            <Dependent Role="ActorsMovie">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DirectorsMovieDirector">
+          <End Role="Directors" Type="Self.Directors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DirectorsMovie" Type="Self.DirectorsMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directors">
+              <PropertyRef Name="directorID" />
+            </Principal>
+            <Dependent Role="DirectorsMovie">
+              <PropertyRef Name="DirectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DirectorsMovieMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DirectorsMovie" Type="Self.DirectorsMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movieID" />
+            </Principal>
+            <Dependent Role="DirectorsMovie">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DVDMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+          <End Role="DVD" Type="Self.DVD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movieID" />
+            </Principal>
+            <Dependent Role="DVD">
+              <PropertyRef Name="movieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingDetailsDVD">
+          <End Role="DVD" Type="Self.DVD" Multiplicity="1" />
+          <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DVD">
+              <PropertyRef Name="DVDID" />
+            </Principal>
+            <Dependent Role="RentingDetails">
+              <PropertyRef Name="DVDID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingDetailsRenting">
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="1" />
+          <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rentings">
+              <PropertyRef Name="rentingID" />
+            </Principal>
+            <Dependent Role="RentingDetails">
+              <PropertyRef Name="rentingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingsAdmin">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Rentings">
+              <PropertyRef Name="adminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingsCustomer">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Rentings">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TypeMovieMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TypeMovie" Type="Self.TypeMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movieID" />
+            </Principal>
+            <Dependent Role="TypeMovie">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TypeMovieType">
+          <End Role="FilmTypes" Type="Self.FilmTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TypeMovie" Type="Self.TypeMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FilmTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="TypeMovie">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjetVideoModelStoreContainer">
+          <EntitySet Name="Actors" EntityType="Self.Actors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActorsMovie" EntityType="Self.ActorsMovie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Directors" EntityType="Self.Directors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DirectorsMovie" EntityType="Self.DirectorsMovie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DVD" EntityType="Self.DVD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilmTypes" EntityType="Self.FilmTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RentingDetails" EntityType="Self.RentingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rentings" EntityType="Self.Rentings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeMovie" EntityType="Self.TypeMovie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ActorsMovieActor" Association="Self.FK_ActorsMovieActor">
+            <End Role="Actors" EntitySet="Actors" />
+            <End Role="ActorsMovie" EntitySet="ActorsMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActorsMovieMovie" Association="Self.FK_ActorsMovieMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="ActorsMovie" EntitySet="ActorsMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DirectorsMovieDirector" Association="Self.FK_DirectorsMovieDirector">
+            <End Role="Directors" EntitySet="Directors" />
+            <End Role="DirectorsMovie" EntitySet="DirectorsMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DirectorsMovieMovie" Association="Self.FK_DirectorsMovieMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="DirectorsMovie" EntitySet="DirectorsMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DVDMovie" Association="Self.FK_DVDMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="DVD" EntitySet="DVD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingDetailsDVD" Association="Self.FK_RentingDetailsDVD">
+            <End Role="DVD" EntitySet="DVD" />
+            <End Role="RentingDetails" EntitySet="RentingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingDetailsRenting" Association="Self.FK_RentingDetailsRenting">
+            <End Role="Rentings" EntitySet="Rentings" />
+            <End Role="RentingDetails" EntitySet="RentingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingsAdmin" Association="Self.FK_RentingsAdmin">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rentings" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingsCustomer" Association="Self.FK_RentingsCustomer">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentings" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TypeMovieMovie" Association="Self.FK_TypeMovieMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="TypeMovie" EntitySet="TypeMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TypeMovieType" Association="Self.FK_TypeMovieType">
+            <End Role="FilmTypes" EntitySet="FilmTypes" />
+            <End Role="TypeMovie" EntitySet="TypeMovie" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjetVideoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Actors">
+          <Key>
+            <PropertyRef Name="actorID" />
+          </Key>
+          <Property Name="actorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iconURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.ActorsMovie" FromRole="Actors" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rentings" Relationship="Self.FK_RentingsCustomer" FromRole="Customers" ToRole="Rentings" />
+        </EntityType>
+        <EntityType Name="Directors">
+          <Key>
+            <PropertyRef Name="directorID" />
+          </Key>
+          <Property Name="directorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iconURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.DirectorsMovie" FromRole="Directors" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="DVD">
+          <Key>
+            <PropertyRef Name="DVDID" />
+          </Key>
+          <Property Name="DVDID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="movieID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK_DVDMovie" FromRole="DVD" ToRole="Movies" />
+          <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsDVD" FromRole="DVD" ToRole="RentingDetails" />
+          <Property Name="available" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FilmTypes">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="filmType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.TypeMovie" FromRole="FilmTypes" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="movieID" />
+          </Key>
+          <Property Name="movieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="synopsis" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="note" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="DVD" Relationship="Self.FK_DVDMovie" FromRole="Movies" ToRole="DVD" />
+          <NavigationProperty Name="Actors" Relationship="Self.ActorsMovie" FromRole="Movies" ToRole="Actors" />
+          <NavigationProperty Name="Directors" Relationship="Self.DirectorsMovie" FromRole="Movies" ToRole="Directors" />
+          <NavigationProperty Name="FilmTypes" Relationship="Self.TypeMovie" FromRole="Movies" ToRole="FilmTypes" />
+        </EntityType>
+        <EntityType Name="RentingDetails">
+          <Key>
+            <PropertyRef Name="RentingDetailsID" />
+          </Key>
+          <Property Name="RentingDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DVDID" Type="Int32" Nullable="false" />
+          <Property Name="rentingID" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="back" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DVD" Relationship="Self.FK_RentingDetailsDVD" FromRole="RentingDetails" ToRole="DVD" />
+          <NavigationProperty Name="Rentings" Relationship="Self.FK_RentingDetailsRenting" FromRole="RentingDetails" ToRole="Rentings" />
+        </EntityType>
+        <EntityType Name="Rentings">
+          <Key>
+            <PropertyRef Name="rentingID" />
+          </Key>
+          <Property Name="rentingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerID" Type="Int32" Nullable="false" />
+          <Property Name="adminID" Type="Int32" Nullable="false" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateEnd" Type="DateTime" Precision="0" />
+          <Property Name="cost" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_RentingsCustomer" FromRole="Rentings" ToRole="Customers" />
+          <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsRenting" FromRole="Rentings" ToRole="RentingDetails" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_RentingsAdmin" FromRole="Rentings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rentings" Relationship="Self.FK_RentingsAdmin" FromRole="Users" ToRole="Rentings" />
+        </EntityType>
+        <Association Name="FK_RentingsCustomer">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Rentings">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DVDMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+          <End Role="DVD" Type="Self.DVD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="movieID" />
+            </Principal>
+            <Dependent Role="DVD">
+              <PropertyRef Name="movieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingDetailsDVD">
+          <End Role="DVD" Type="Self.DVD" Multiplicity="1" />
+          <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DVD">
+              <PropertyRef Name="DVDID" />
+            </Principal>
+            <Dependent Role="RentingDetails">
+              <PropertyRef Name="DVDID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingDetailsRenting">
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="1" />
+          <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rentings">
+              <PropertyRef Name="rentingID" />
+            </Principal>
+            <Dependent Role="RentingDetails">
+              <PropertyRef Name="rentingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RentingsAdmin">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Rentings">
+              <PropertyRef Name="adminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ActorsMovie">
+          <End Role="Actors" Type="Self.Actors" Multiplicity="*" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+        </Association>
+        <Association Name="DirectorsMovie">
+          <End Role="Directors" Type="Self.Directors" Multiplicity="*" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+        </Association>
+        <Association Name="TypeMovie">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+          <End Role="FilmTypes" Type="Self.FilmTypes" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ProjetVideoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actors" EntityType="Self.Actors" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Directors" EntityType="Self.Directors" />
+          <EntitySet Name="DVD" EntityType="Self.DVD" />
+          <EntitySet Name="FilmTypes" EntityType="Self.FilmTypes" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" />
+          <EntitySet Name="RentingDetails" EntityType="Self.RentingDetails" />
+          <EntitySet Name="Rentings" EntityType="Self.Rentings" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_RentingsCustomer" Association="Self.FK_RentingsCustomer">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentings" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DVDMovie" Association="Self.FK_DVDMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="DVD" EntitySet="DVD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingDetailsDVD" Association="Self.FK_RentingDetailsDVD">
+            <End Role="DVD" EntitySet="DVD" />
+            <End Role="RentingDetails" EntitySet="RentingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingDetailsRenting" Association="Self.FK_RentingDetailsRenting">
+            <End Role="Rentings" EntitySet="Rentings" />
+            <End Role="RentingDetails" EntitySet="RentingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RentingsAdmin" Association="Self.FK_RentingsAdmin">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rentings" EntitySet="Rentings" />
+          </AssociationSet>
+          <AssociationSet Name="ActorsMovie" Association="Self.ActorsMovie">
+            <End Role="Actors" EntitySet="Actors" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="DirectorsMovie" Association="Self.DirectorsMovie">
+            <End Role="Directors" EntitySet="Directors" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="TypeMovie" Association="Self.TypeMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="FilmTypes" EntitySet="FilmTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjetVideoModelStoreContainer" CdmEntityContainer="ProjetVideoEntities">
+          <EntitySetMapping Name="Actors">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Actors">
+              <MappingFragment StoreEntitySet="Actors">
+                <ScalarProperty Name="actorID" ColumnName="actorID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="iconURL" ColumnName="iconURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="mailAddress" ColumnName="mailAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directors">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Directors">
+              <MappingFragment StoreEntitySet="Directors">
+                <ScalarProperty Name="directorID" ColumnName="directorID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="iconURL" ColumnName="iconURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DVD">
+            <EntityTypeMapping TypeName="ProjetVideoModel.DVD">
+              <MappingFragment StoreEntitySet="DVD">
+                <ScalarProperty Name="available" ColumnName="available" />
+                <ScalarProperty Name="DVDID" ColumnName="DVDID" />
+                <ScalarProperty Name="movieID" ColumnName="movieID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilmTypes">
+            <EntityTypeMapping TypeName="ProjetVideoModel.FilmTypes">
+              <MappingFragment StoreEntitySet="FilmTypes">
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="filmType" ColumnName="filmType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Movies">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="movieID" ColumnName="movieID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="synopsis" ColumnName="synopsis" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RentingDetails">
+            <EntityTypeMapping TypeName="ProjetVideoModel.RentingDetails">
+              <MappingFragment StoreEntitySet="RentingDetails">
+                <ScalarProperty Name="RentingDetailsID" ColumnName="RentingDetailsID" />
+                <ScalarProperty Name="DVDID" ColumnName="DVDID" />
+                <ScalarProperty Name="rentingID" ColumnName="rentingID" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="back" ColumnName="back" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rentings">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Rentings">
+              <MappingFragment StoreEntitySet="Rentings">
+                <ScalarProperty Name="rentingID" ColumnName="rentingID" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="adminID" ColumnName="adminID" />
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ProjetVideoModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ActorsMovie" TypeName="ProjetVideoModel.ActorsMovie" StoreEntitySet="ActorsMovie">
+            <EndProperty Name="Actors">
+              <ScalarProperty Name="actorID" ColumnName="ActorID" />
+            </EndProperty>
+            <EndProperty Name="Movies">
+              <ScalarProperty Name="movieID" ColumnName="MovieID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="DirectorsMovie" TypeName="ProjetVideoModel.DirectorsMovie" StoreEntitySet="DirectorsMovie">
+            <EndProperty Name="Directors">
+              <ScalarProperty Name="directorID" ColumnName="DirectorID" />
+            </EndProperty>
+            <EndProperty Name="Movies">
+              <ScalarProperty Name="movieID" ColumnName="MovieID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TypeMovie" TypeName="ProjetVideoModel.TypeMovie" StoreEntitySet="TypeMovie">
+            <EndProperty Name="Movies">
+              <ScalarProperty Name="movieID" ColumnName="MovieID" />
+            </EndProperty>
+            <EndProperty Name="FilmTypes">
+              <ScalarProperty Name="typeID" ColumnName="typeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

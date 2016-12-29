@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "ActorEdit";
+}
+
+<h2>Acteurs de @Model.title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <form></form>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+        <div>
+            <a href="../../Actors/Create" class="btn btn-link">Créer un nouvel acteur</a>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" >Réalisateurs</label>
+            <div class="col-md-10">
+
+
+
+                <form action='/Movies/ActorEdit/@Model.movieID' method='post'>
+                    <ul id="ajaxContent" class="list-group ">
+                        @foreach (var act in ViewBag.actors)
+                        {
+                            <li class='list-group-item'>
+                                <input type='checkbox' class='btn btn-default' value='@act.actorID' name="actors" checked='@Model.Actors.Contains(act)' />
+                                <label class='control-label'>@act.firstName @act.lastName </label>
+
+                            </li>
+                        }
+
+
+                    </ul>
+                    <input type="submit" class="btn btn-default" />
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

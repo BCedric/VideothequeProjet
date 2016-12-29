@@ -1,0 +1,104 @@
+﻿@model VideothequeProjet.Models.Movies
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        
+        
+
+        
+           <h1>@Html.DisplayFor(model => model.title)</h1>
+        
+        @if (Model.Directors.Count > 0)
+        {
+            <h2>De
+
+                @foreach (var director in Model.Directors)
+                {
+                    @Html.DisplayFor(modelItem => director.firstName) @Html.DisplayName(" ") @Html.DisplayFor(modelItem => director.lastName)
+                }
+            </h2>
+        }
+        
+
+        <p><b>Année de sortie :</b> @Html.DisplayFor(model => model.year)</p>
+        <p>
+            <b>Genre : </b>
+            @foreach (var genre in Model.FilmTypes)
+            {
+                @Html.DisplayFor(modelItem => genre.filmType) @Html.DisplayName(" ")
+            }
+            @if (Model.FilmTypes.Count == 0) { @Html.DisplayName("Aucun")}
+
+        </p>
+        <p><b>Durée : </b> 
+        @{
+            int h = (int) (Model.duration / 60);
+            int m = (int) Model.duration % 60;
+            
+        }
+        @h
+        h
+        @m
+       </p>
+
+        <p><b>Note : </b>@Html.DisplayFor(model => model.note)</p>
+
+        <p>@Html.DisplayFor(model => model.synopsis)</p>
+
+      
+
+    </dl>
+    Nombre d'exemplaires en stock :  @(Model.DVD.Where(dvd => dvd.available).Count() - ViewBag.nbLoues) / @Model.DVD.Where(dvd => dvd.available).Count()
+
+    @if (ViewBag.nbLoues != 0)
+    {
+        <table class="table">
+            <tr>
+
+                <th>
+                    Client
+                </th>
+
+                <th>
+                    Date de près
+                </th>
+                <th>
+                    Date de retour prévu
+                </th>
+
+            </tr>
+
+            @foreach (var rd in ViewBag.exemplaireLoues)
+            {
+                <tr>
+
+                    <td>
+                        @rd.Rentings.Customers.firstName
+                        @rd.Rentings.Customers.lastName
+                    </td>
+
+                    <td>
+                        @rd.Rentings.dateStart
+                    </td>
+                    <td>
+                        @rd.Rentings.dateEnd
+                    </td>
+
+
+
+                </tr>
+            }
+
+        </table>
+    }
+    
+    
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.movieID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

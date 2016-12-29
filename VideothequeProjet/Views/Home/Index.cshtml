@@ -1,0 +1,45 @@
+﻿@model VideothequeProjet.Models.UserViewModel
+@{
+    ViewBag.Title = "Connexion";
+}
+
+
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @if (Model.Authentifie)
+            {
+                <h3>
+                    Vous êtes déjà authentifié avec le login :
+                    @Model.user.login
+                </h3>
+                @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
+            }
+            else
+            {
+                
+                using (Html.BeginForm())
+                {
+                    <div>
+                        @Html.LabelFor(m => m.user.login, new { @class = "control-label col-md-2"  })
+                        @Html.TextBoxFor(m => m.user.login,new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.user.login)
+                    </div>
+                    <div>
+                        @Html.LabelFor(m => m.user.password, new { @class = "control-label col-md-2" } )
+                        @Html.PasswordFor(m => m.user.password,  new { @class = "form-control" } )
+                        @Html.ValidationMessageFor(m => m.user.password)
+                    </div>
+                    <input type="submit" value="Se connecter" class="btn btn-default"/>
+                    <br />                    
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

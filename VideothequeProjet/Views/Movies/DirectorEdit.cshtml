@@ -1,0 +1,95 @@
+﻿@model VideothequeProjet.Models.Movies
+
+
+@{
+    ViewBag.Title = "DirectorEdit";
+}
+
+<h2>Réalisateurs de @Model.title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <form>
+
+        </form>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        
+
+        <div>            
+            <a href="../../Directors/Create" class="btn btn-link">Créer un nouveau réalisateur</a>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="DirectorID">Réalisateurs</label>
+            <div class="col-md-10">
+
+
+                
+                <form action='/Movies/DirectorEdit/@Model.movieID' method='post'>
+                    <ul id="ajaxContent" class="list-group ">
+                        @foreach (var dir in ViewBag.directors)
+                        {
+                            <li class='list-group-item'>
+                                <input type='checkbox' class='btn btn-default' value='@dir.directorID' name="directors" checked='@Model.Directors.Contains(dir)' />
+                                <label class='control-label'>@dir.firstName @dir.lastName </label>
+
+                            </li>
+                        }
+
+
+                    </ul>
+                    <input type="submit" class="btn btn-default" />
+                </form>
+            </div>
+        </div>
+
+
+
+        <!--
+            <script type="text/javascript">
+    function UpdateDirectorsList() {
+        $(document).ready(function () {
+
+            var url = '@Url.Action("AjaxRequest", "Movies")?nameDir=' + $("#selDirectors").val();
+            $.ajax({
+                type : "POST",
+                url: '@Url.Action("AjaxRequest", "Movies")',
+                        data: { nameDir: $("#selDirectors").val() },
+                        datatype: "json",
+                        success: function (data) {
+                            console.log(data);
+                            $("#ajaxContent").empty();
+                            $.each(data, function (val, dir) {
+
+                                var label = "<form action = '/Movies/addDirector/"+ @Model.movieID +"' method = 'post'><input type = 'hidden' value ='" + dir.directorID + "' name ='idDir'/><li class='list-group-item col-md-4'><label class='control-label'>" + dir.firstName + " " + dir.lastName + "</label><input type = 'submit' class='btn btn-default' value = 'Ajouter'/></li></form>";
+                                $("#ajaxContent").append(label);
+
+                            });
+                        },
+                        error: function (xhr, status) {
+                            console.log(xhr.responseText);
+                        },
+                    })
+                })
+            }
+        </script>
+
+
+        -->
+
+
+
+
+        
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<VideothequeProjet.Models.Movies>
+
+@{
+    ViewBag.Title = "Liste des films";
+}
+
+<h2>Liste des films</h2>
+
+<p>
+    @Html.ActionLink("Ajouter un film", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+            Titre
+        </th>
+        
+        <th>
+            Durée
+        </th>
+        <th>
+            Année de sortie
+        </th>
+        <th>
+            Note
+        </th>
+        <th>
+            Réalisateur
+        </th>
+        <th>
+            Acteurs
+        </th>
+        <th>
+            Genre
+        </th>
+        <th>
+            Prix
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.ActionLink(item.title, "Details", new { id = item.movieID })            
+        </td>
+        
+        <td>
+            @{
+            int h = (int)(item.duration / 60);
+            int m = (int)item.duration % 60;
+
+            }
+            @h
+            h
+            @m
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.note)
+        </td>
+
+        <td>
+            @foreach (var director in item.Directors)
+            {
+                <a href="/Movies/DirectorEdit/@item.movieID">@Html.DisplayFor(modelItem => director.firstName) @Html.DisplayFor(modelItem => director.lastName)</a>
+            }
+            @if (item.Directors.Count() == 0) {@Html.ActionLink("Selectionner", "DirectorEdit", new { id = item.movieID }) }
+            
+        </td>
+        <td>
+            @foreach (var actor in item.Actors)
+            {
+                <a href="/Movies/ActorEdit/@item.movieID">@Html.DisplayFor(modelItem => actor.firstName) @Html.DisplayFor(modelItem => actor.lastName)</a>
+            }
+            @if (item.Actors.Count() == 0)
+            {@Html.ActionLink("Selectionner", "ActorEdit", new { id = item.movieID }) }
+
+        </td>
+        <td>
+            @foreach (var type in item.FilmTypes)
+            {
+                <p>@Html.DisplayFor(modelItem => type.filmType)</p>
+            }
+        </td>
+
+        <td>
+            @item.price
+            €
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.movieID }) 
+            
+            <!-- @Html.ActionLink("Delete", "Delete", new { id=item.movieID })-->
+        </td>
+
+
+
+    </tr>
+}
+
+</table>

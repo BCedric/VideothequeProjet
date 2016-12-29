@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProjetVideoModelStoreContainer" CdmEntityContainer="ProjetVideoEntities">
+    <EntitySetMapping Name="Actors">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Actors">
+        <MappingFragment StoreEntitySet="Actors">
+          <ScalarProperty Name="actorID" ColumnName="actorID" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="iconURL" ColumnName="iconURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+          <ScalarProperty Name="mailAddress" ColumnName="mailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Directors">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Directors">
+        <MappingFragment StoreEntitySet="Directors">
+          <ScalarProperty Name="directorID" ColumnName="directorID" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="iconURL" ColumnName="iconURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DVD">
+      <EntityTypeMapping TypeName="ProjetVideoModel.DVD">
+        <MappingFragment StoreEntitySet="DVD">
+          <ScalarProperty Name="available" ColumnName="available" />
+          <ScalarProperty Name="DVDID" ColumnName="DVDID" />
+          <ScalarProperty Name="movieID" ColumnName="movieID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmTypes">
+      <EntityTypeMapping TypeName="ProjetVideoModel.FilmTypes">
+        <MappingFragment StoreEntitySet="FilmTypes">
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="filmType" ColumnName="filmType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Movies">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="movieID" ColumnName="movieID" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="synopsis" ColumnName="synopsis" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RentingDetails">
+      <EntityTypeMapping TypeName="ProjetVideoModel.RentingDetails">
+        <MappingFragment StoreEntitySet="RentingDetails">
+          <ScalarProperty Name="RentingDetailsID" ColumnName="RentingDetailsID" />
+          <ScalarProperty Name="DVDID" ColumnName="DVDID" />
+          <ScalarProperty Name="rentingID" ColumnName="rentingID" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="back" ColumnName="back" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rentings">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Rentings">
+        <MappingFragment StoreEntitySet="Rentings">
+          <ScalarProperty Name="rentingID" ColumnName="rentingID" />
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+          <ScalarProperty Name="adminID" ColumnName="adminID" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ProjetVideoModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ActorsMovie" TypeName="ProjetVideoModel.ActorsMovie" StoreEntitySet="ActorsMovie">
+      <EndProperty Name="Actors">
+        <ScalarProperty Name="actorID" ColumnName="ActorID" />
+      </EndProperty>
+      <EndProperty Name="Movies">
+        <ScalarProperty Name="movieID" ColumnName="MovieID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DirectorsMovie" TypeName="ProjetVideoModel.DirectorsMovie" StoreEntitySet="DirectorsMovie">
+      <EndProperty Name="Directors">
+        <ScalarProperty Name="directorID" ColumnName="DirectorID" />
+      </EndProperty>
+      <EndProperty Name="Movies">
+        <ScalarProperty Name="movieID" ColumnName="MovieID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TypeMovie" TypeName="ProjetVideoModel.TypeMovie" StoreEntitySet="TypeMovie">
+      <EndProperty Name="Movies">
+        <ScalarProperty Name="movieID" ColumnName="MovieID" />
+      </EndProperty>
+      <EndProperty Name="FilmTypes">
+        <ScalarProperty Name="typeID" ColumnName="typeID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
