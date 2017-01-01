@@ -38,9 +38,9 @@
     </Key>
     <Property Name="DVDID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="movieID" Type="Int32" Nullable="false" />
+    <Property Name="available" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Movies" Relationship="Self.FK_DVDMovie" FromRole="DVD" ToRole="Movies" />
     <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsDVD" FromRole="DVD" ToRole="RentingDetails" />
-    <Property Name="available" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="FilmTypes">
     <Key>
@@ -73,10 +73,12 @@
     <Property Name="RentingDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DVDID" Type="Int32" Nullable="false" />
     <Property Name="rentingID" Type="Int32" Nullable="false" />
-    <Property Name="price" Type="Double" Nullable="false" />
+    <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="back" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="DVD" Relationship="Self.FK_RentingDetailsDVD" FromRole="RentingDetails" ToRole="DVD" />
     <NavigationProperty Name="Rentings" Relationship="Self.FK_RentingDetailsRenting" FromRole="RentingDetails" ToRole="Rentings" />
+    <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="dateEnd" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="Rentings">
     <Key>
@@ -84,10 +86,8 @@
     </Key>
     <Property Name="rentingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="customerID" Type="Int32" Nullable="false" />
-    <Property Name="adminID" Type="Int32" Nullable="false" />
-    <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="dateEnd" Type="DateTime" Precision="0" />
-    <Property Name="cost" Type="Double" Nullable="false" />
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="cost" Type="Decimal" Nullable="true" Precision="18" Scale="0" />
     <NavigationProperty Name="Customers" Relationship="Self.FK_RentingsCustomer" FromRole="Rentings" ToRole="Customers" />
     <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsRenting" FromRole="Rentings" ToRole="RentingDetails" />
     <NavigationProperty Name="Users" Relationship="Self.FK_RentingsAdmin" FromRole="Rentings" ToRole="Users" />
@@ -159,7 +159,7 @@
         <PropertyRef Name="userID" />
       </Principal>
       <Dependent Role="Rentings">
-        <PropertyRef Name="adminID" />
+        <PropertyRef Name="userID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

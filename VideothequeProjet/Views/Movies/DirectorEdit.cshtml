@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "DirectorEdit";
+    ViewBag.Title = "Réalisateurs de " + @Model.title;
 }
 
 <h2>Réalisateurs de @Model.title</h2>
@@ -91,5 +91,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour à la liste des films", "Index")
 </div>

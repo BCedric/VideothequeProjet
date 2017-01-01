@@ -79,7 +79,9 @@
     <Property Name="RentingDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DVDID" Type="int" Nullable="false" />
     <Property Name="rentingID" Type="int" Nullable="false" />
-    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="dateStart" Type="date" Nullable="false" />
+    <Property Name="dateEnd" Type="date" />
     <Property Name="back" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Rentings">
@@ -88,10 +90,8 @@
     </Key>
     <Property Name="rentingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="customerID" Type="int" Nullable="false" />
-    <Property Name="adminID" Type="int" Nullable="false" />
-    <Property Name="dateStart" Type="date" Nullable="false" />
-    <Property Name="dateEnd" Type="date" />
-    <Property Name="cost" Type="float" Nullable="false" />
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="TypeMovie">
     <Key>
@@ -192,7 +192,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RentingDetailsRenting">
-    <End Role="Rentings" Type="Self.Rentings" Multiplicity="1" />
+    <End Role="Rentings" Type="Self.Rentings" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Rentings">
@@ -211,7 +213,7 @@
         <PropertyRef Name="userID" />
       </Principal>
       <Dependent Role="Rentings">
-        <PropertyRef Name="adminID" />
+        <PropertyRef Name="userID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

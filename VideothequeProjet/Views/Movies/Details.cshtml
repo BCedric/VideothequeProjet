@@ -1,7 +1,7 @@
 ﻿@model VideothequeProjet.Models.Movies
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Film - "+@Html.DisplayFor(model => model.title);
 }
 
 <div>
@@ -24,9 +24,9 @@
         }
         
 
-        <p><b>Année de sortie :</b> @Html.DisplayFor(model => model.year)</p>
+        <p><b>@Html.DisplayNameFor(model => model.year) :</b> @Html.DisplayFor(model => model.year)</p>
         <p>
-            <b>Genre : </b>
+            <b>@Html.DisplayNameFor(model => model.FilmTypes) : </b>
             @foreach (var genre in Model.FilmTypes)
             {
                 @Html.DisplayFor(modelItem => genre.filmType) @Html.DisplayName(" ")
@@ -34,7 +34,7 @@
             @if (Model.FilmTypes.Count == 0) { @Html.DisplayName("Aucun")}
 
         </p>
-        <p><b>Durée : </b> 
+        <p><b>@Html.DisplayNameFor(model => model.duration) : </b> 
         @{
             int h = (int) (Model.duration / 60);
             int m = (int) Model.duration % 60;
@@ -45,7 +45,7 @@
         @m
        </p>
 
-        <p><b>Note : </b>@Html.DisplayFor(model => model.note)</p>
+        <p><b>@Html.DisplayNameFor(model => model.note) : </b>@Html.DisplayFor(model => model.note)</p>
 
         <p>@Html.DisplayFor(model => model.synopsis)</p>
 
@@ -82,10 +82,10 @@
                     </td>
 
                     <td>
-                        @rd.Rentings.dateStart
+                        @rd.dateStart
                     </td>
                     <td>
-                        @rd.Rentings.dateEnd
+                        @rd.dateEnd
                     </td>
 
 
@@ -99,6 +99,6 @@
     
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.movieID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.movieID }) |
+    @Html.ActionLink("Retour à la liste des films", "Index")
 </p>

@@ -7,35 +7,35 @@
 <h2>Liste des films</h2>
 
 <p>
-    @Html.ActionLink("Ajouter un film", "Create")
+    @Html.ActionLink("Ajouter un film", "Create", new object { }, new { @class = "btn btn-default" })
 </p>
 <table class="table">
     <tr>
         
-        <th>
-            Titre
+        <th>            
+            @Html.DisplayNameFor(model => model.title)            
         </th>
         
         <th>
-            Durée
+            @Html.DisplayNameFor(model => model.duration) 
         </th>
         <th>
-            Année de sortie
+            @Html.DisplayNameFor(model => model.year) 
         </th>
         <th>
-            Note
+            @Html.DisplayNameFor(model => model.note) 
         </th>
         <th>
-            Réalisateur
+            @Html.DisplayNameFor(model => model.Directors) 
         </th>
         <th>
-            Acteurs
+            @Html.DisplayNameFor(model => model.Actors) 
         </th>
         <th>
-            Genre
+            @Html.DisplayNameFor(model => model.FilmTypes) 
         </th>
         <th>
-            Prix
+            @Html.DisplayNameFor(model => model.price) 
         </th>
         <th></th>
     </tr>
@@ -94,7 +94,7 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.movieID }) 
+            @Html.ActionLink("Modifier", "Edit", new {  id=item.movieID }) 
             
             <!-- @Html.ActionLink("Delete", "Delete", new { id=item.movieID })-->
         </td>

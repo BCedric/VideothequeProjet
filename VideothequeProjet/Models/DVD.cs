@@ -11,13 +11,13 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class DVD
     {
         public DVD()
         {
             this.RentingDetails = new HashSet<RentingDetails>();
-            this.available = true;
         }
     
         public int DVDID { get; set; }

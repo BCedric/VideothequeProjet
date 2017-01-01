@@ -16,7 +16,7 @@ namespace VideothequeProjet.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(_db.Customers.ToList());
+            return View(_db.Customers.OrderBy(c=>c.lastName).ToList());
         }
 
         // GET: Customers/Details/5
@@ -34,12 +34,12 @@ namespace VideothequeProjet.Controllers
 
         // POST: Customers/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Customers cutomerToCreate)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _db.Customers.Add(cutomerToCreate);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch

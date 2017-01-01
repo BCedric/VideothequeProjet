@@ -14,50 +14,79 @@
         <p>@Html.DisplayFor(model => model.mailAddress)</p>
 
     
-        <a href='@Url.Content("~/Rentings/Create/"+Model.customerID)'>Ajouter une nouvelle location</a>
+        <a href='@Url.Content("~/Rentings/Create?customerID=" + Model.customerID)'>Ajouter une nouvelle location</a>
 
-        <h2>Locations en cours</h2>
-
-
-    <table class="table">
-        <tr>
-
-            <th>
-               Film
-            </th>
-            <th>
-               Date de près
-            </th>
-            <th>
-                Date de retour prévu
-            </th>            
-        </tr>
-
-        @foreach (var renting in Model.Rentings)
-        {
-            foreach (var rd in renting.RentingDetails)
-            {
-                if (!rd.back)
-                {
-                    <tr>
-
-                        <td>
-                            @rd.DVD.Movies.title
-                        </td>
-                        <td>
-                            @renting.dateStart
-                        </td>
-                        <td>
-                            @renting.dateEnd;
-                        </td>
-
-                    </tr>
+        <h2>
+            Locations en cours
+            
+        </h2>
+    @{
+        var cptLoc = 0;
+        foreach(var r in Model.Rentings){
+            foreach(var rd in r.RentingDetails){
+                if(!rd.back){
+                    cptLoc++;
                 }
-
             }
         }
+    }
 
-    </table>
+    @if (cptLoc == 0)
+    {
+        <p>
+            Aucune
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+
+                <th>
+                    Film
+                </th>
+                <th>
+                    Date de près
+                </th>
+                <th>
+                    Date de retour prévu
+                </th>
+                <th></th>
+
+            </tr>
+
+            @foreach (var renting in Model.Rentings)
+            {
+                foreach (var rd in renting.RentingDetails)
+                {
+                    if (!rd.back)
+                    {
+                        <tr>
+
+                            <td>
+                                <a href='@Url.Content("~/Rentings/Show?id= "+renting.rentingID)'>@rd.DVD.Movies.title</a>
+
+                            </td>
+                            <td>
+                                @rd.dateStart
+                            </td>
+                            <td @{ if (rd.dateEnd < DateTime.Today) { @: style=" color:red;"
+                                                                                               } }>
+                                @rd.dateEnd
+                            </td>
+                            <td>
+                                <a href='@Url.Content("~/Rentings/DVDBack?rdid=" + rd.RentingDetailsID)'>Rendre le DVD</a>
+                            </td>
+
+                        </tr>
+                    }
+
+                }
+            }
+
+        </table>
+    }
+    
 
 
 
@@ -90,13 +119,13 @@
                     <tr>
 
                         <td>
-                            @rd.DVD.Movies.title
+                            <a href='@Url.Content("~/Rentings/Show?id= "+renting.rentingID)'>@rd.DVD.Movies.title</a>
+</td>
+                        <td>
+                            @rd.dateStart.ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @renting.dateStart.ToString("dd/MM/yyyy")
-                        </td>
-                        <td>
-                            @renting.dateEnd
+                            @rd.dateEnd.Value.ToString("dd/MM/yyyy")
                         </td>
 
                     </tr>
@@ -109,6 +138,6 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifier le profil", "Edit", new { id = Model.customerID }) |
+    @Html.ActionLink("Retour à la liste des clients", "Index")
 </p>

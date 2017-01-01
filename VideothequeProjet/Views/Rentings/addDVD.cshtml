@@ -1,0 +1,74 @@
+﻿@model VideothequeProjet.Models.Rentings
+@using VideothequeProjet.Models;
+@{
+    ViewBag.Title = "addDVD";
+}
+
+<h2>Ajouter des DVDs</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <form></form>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">            
+            <div class="col-md-10">
+
+
+
+                <form action='/Rentings/addDVD/@Model.rentingID' method='post'>
+                    <ul class="list-group ">
+                        @foreach (var dvd in ViewBag.DVDs)
+                        {
+                            <li class='list-group-item'>
+                                <input type='checkbox'  class='btn btn-default' value='@dvd.DVDID' name="dvds"
+                                       @{  
+                                           foreach (var rd in dvd.RentingDetails) { 
+                                               if (!rd.back) { 
+                                                   @: disabled="disabled"
+                                                   break;
+                                               }                                                
+                                           }
+                                            foreach (var mrd in Model.RentingDetails)
+                                            {
+                                                if (mrd.DVD.Equals(dvd))
+                                                {
+                                                    @:checked = "checked"
+                                                }
+                                            }
+                                       }
+
+                                />
+
+
+
+                                <label class='control-label'>
+                                @dvd.Movies.title
+                                @Html.Display("\t")
+                                n°@dvd.DVDID
+                                 </label>
+                            </li>
+                        }
+
+
+                    </ul>
+                    <input type="submit" class="btn btn-default" />
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+}
+
+

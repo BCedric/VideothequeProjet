@@ -1,31 +1,31 @@
 ﻿@model IEnumerable<VideothequeProjet.Models.Customers>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Liste des clients";
 }
 
-<h2>Index</h2>
+<h2>Liste des clients</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nouveau Client", "Create", new object { }, new { @class = "btn btn-default"})
 </p>
 <table class="table">
     <tr>
         
         <th>
-            Prénom
+            @Html.DisplayNameFor(model => model.firstName)
         </th>
         <th>
-           Nom
+           @Html.DisplayNameFor(model => model.lastName)
         </th>
         <th>
-            Adresse
+            @Html.DisplayNameFor(model => model.address)
         </th>
         <th>
-            Numéro de téléphone
+            @Html.DisplayNameFor(model => model.phoneNumber)
         </th>
         <th>
-            Adresse mail
+            @Html.DisplayNameFor(model => model.mailAddress)
         </th>
         <th></th>
     </tr>
@@ -49,8 +49,8 @@
             @Html.DisplayFor(modelItem => item.mailAddress)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.customerID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.customerID }) 
+            @Html.ActionLink("Modifier", "Edit", new { id=item.customerID }) |
+            @Html.ActionLink("Détails", "Details", new { id=item.customerID }) 
         </td>
     </tr>
 }

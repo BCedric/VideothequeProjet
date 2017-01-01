@@ -84,7 +84,9 @@
           <Property Name="RentingDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DVDID" Type="int" Nullable="false" />
           <Property Name="rentingID" Type="int" Nullable="false" />
-          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dateStart" Type="date" Nullable="false" />
+          <Property Name="dateEnd" Type="date" />
           <Property Name="back" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Rentings">
@@ -93,10 +95,8 @@
           </Key>
           <Property Name="rentingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="customerID" Type="int" Nullable="false" />
-          <Property Name="adminID" Type="int" Nullable="false" />
-          <Property Name="dateStart" Type="date" Nullable="false" />
-          <Property Name="dateEnd" Type="date" />
-          <Property Name="cost" Type="float" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="TypeMovie">
           <Key>
@@ -197,7 +197,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RentingDetailsRenting">
-          <End Role="Rentings" Type="Self.Rentings" Multiplicity="1" />
+          <End Role="Rentings" Type="Self.Rentings" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="RentingDetails" Type="Self.RentingDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Rentings">
@@ -216,7 +218,7 @@
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="Rentings">
-              <PropertyRef Name="adminID" />
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -360,9 +362,9 @@
           </Key>
           <Property Name="DVDID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="movieID" Type="Int32" Nullable="false" />
+          <Property Name="available" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Movies" Relationship="Self.FK_DVDMovie" FromRole="DVD" ToRole="Movies" />
           <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsDVD" FromRole="DVD" ToRole="RentingDetails" />
-          <Property Name="available" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="FilmTypes">
           <Key>
@@ -395,10 +397,12 @@
           <Property Name="RentingDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DVDID" Type="Int32" Nullable="false" />
           <Property Name="rentingID" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="back" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DVD" Relationship="Self.FK_RentingDetailsDVD" FromRole="RentingDetails" ToRole="DVD" />
           <NavigationProperty Name="Rentings" Relationship="Self.FK_RentingDetailsRenting" FromRole="RentingDetails" ToRole="Rentings" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateEnd" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Rentings">
           <Key>
@@ -406,10 +410,8 @@
           </Key>
           <Property Name="rentingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="customerID" Type="Int32" Nullable="false" />
-          <Property Name="adminID" Type="Int32" Nullable="false" />
-          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="dateEnd" Type="DateTime" Precision="0" />
-          <Property Name="cost" Type="Double" Nullable="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="true" Precision="18" Scale="0" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_RentingsCustomer" FromRole="Rentings" ToRole="Customers" />
           <NavigationProperty Name="RentingDetails" Relationship="Self.FK_RentingDetailsRenting" FromRole="Rentings" ToRole="RentingDetails" />
           <NavigationProperty Name="Users" Relationship="Self.FK_RentingsAdmin" FromRole="Rentings" ToRole="Users" />
@@ -481,7 +483,7 @@
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="Rentings">
-              <PropertyRef Name="adminID" />
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -581,9 +583,9 @@
           <EntitySetMapping Name="DVD">
             <EntityTypeMapping TypeName="ProjetVideoModel.DVD">
               <MappingFragment StoreEntitySet="DVD">
-                <ScalarProperty Name="available" ColumnName="available" />
                 <ScalarProperty Name="DVDID" ColumnName="DVDID" />
                 <ScalarProperty Name="movieID" ColumnName="movieID" />
+                <ScalarProperty Name="available" ColumnName="available" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -611,6 +613,8 @@
           <EntitySetMapping Name="RentingDetails">
             <EntityTypeMapping TypeName="ProjetVideoModel.RentingDetails">
               <MappingFragment StoreEntitySet="RentingDetails">
+                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
                 <ScalarProperty Name="RentingDetailsID" ColumnName="RentingDetailsID" />
                 <ScalarProperty Name="DVDID" ColumnName="DVDID" />
                 <ScalarProperty Name="rentingID" ColumnName="rentingID" />
@@ -624,9 +628,7 @@
               <MappingFragment StoreEntitySet="Rentings">
                 <ScalarProperty Name="rentingID" ColumnName="rentingID" />
                 <ScalarProperty Name="customerID" ColumnName="customerID" />
-                <ScalarProperty Name="adminID" ColumnName="adminID" />
-                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
-                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -21,17 +21,15 @@ namespace VideothequeProjet.Models
         }
     
         public int rentingID { get; set; }
-        public int customerID { get; set; }        
-        public int adminID { get; set; }
-        [Display(Name = "Date de près")]
-        public System.DateTime dateStart { get; set; }
-        [Display(Name = "Date de rendu prévu")]
-        public Nullable<System.DateTime> dateEnd { get; set; }
+        public int customerID { get; set; }
+        public int userID { get; set; }
         [Display(Name = "Prix")]
-        public double cost { get; set; }
-    
+        public Nullable<decimal> cost { get; set; }
+
+        [Display(Name = "Client")]
         public virtual Customers Customers { get; set; }
         public virtual ICollection<RentingDetails> RentingDetails { get; set; }
+        [Display(Name = "Employé")]
         public virtual Users Users { get; set; }
     }
 }

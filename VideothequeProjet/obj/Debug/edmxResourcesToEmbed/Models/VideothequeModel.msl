@@ -36,9 +36,9 @@
     <EntitySetMapping Name="DVD">
       <EntityTypeMapping TypeName="ProjetVideoModel.DVD">
         <MappingFragment StoreEntitySet="DVD">
-          <ScalarProperty Name="available" ColumnName="available" />
           <ScalarProperty Name="DVDID" ColumnName="DVDID" />
           <ScalarProperty Name="movieID" ColumnName="movieID" />
+          <ScalarProperty Name="available" ColumnName="available" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -66,6 +66,8 @@
     <EntitySetMapping Name="RentingDetails">
       <EntityTypeMapping TypeName="ProjetVideoModel.RentingDetails">
         <MappingFragment StoreEntitySet="RentingDetails">
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
           <ScalarProperty Name="RentingDetailsID" ColumnName="RentingDetailsID" />
           <ScalarProperty Name="DVDID" ColumnName="DVDID" />
           <ScalarProperty Name="rentingID" ColumnName="rentingID" />
@@ -79,9 +81,7 @@
         <MappingFragment StoreEntitySet="Rentings">
           <ScalarProperty Name="rentingID" ColumnName="rentingID" />
           <ScalarProperty Name="customerID" ColumnName="customerID" />
-          <ScalarProperty Name="adminID" ColumnName="adminID" />
-          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
-          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="cost" ColumnName="cost" />
         </MappingFragment>
       </EntityTypeMapping>

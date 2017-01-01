@@ -11,6 +11,7 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Movies
     {
@@ -23,16 +24,23 @@ namespace VideothequeProjet.Models
         }
     
         public int movieID { get; set; }
+        [Display(Name = "Titre")]
         public string title { get; set; }
+        [Display(Name = "Synopsis")]
         public string synopsis { get; set; }
+        [Display(Name = "Durée")]
         public Nullable<int> duration { get; set; }
+        [Display(Name = "Année de sortie")]
         public Nullable<int> year { get; set; }
+        [Display(Name = "Note")]
         public Nullable<decimal> note { get; set; }
+        [Display(Name = "Prix")]
         public decimal price { get; set; }
     
         public virtual ICollection<DVD> DVD { get; set; }
         public virtual ICollection<Actors> Actors { get; set; }
         public virtual ICollection<Directors> Directors { get; set; }
+        [Display(Name = "Genre")]
         public virtual ICollection<FilmTypes> FilmTypes { get; set; }
     }
 }
