@@ -1,13 +1,13 @@
 ﻿@model VideothequeProjet.Models.Rentings
 
 @{
-    ViewBag.Title = "Show";
+    ViewBag.Title = "Location";
 }
 
-<h2>Show</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Rentings</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,11 +20,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Users)
+            Fait par
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Users.login)
+            @Html.DisplayFor(model => model.Users.firstName)
+
+            @Html.DisplayFor(model => model.Users.lastName)
         </dd>
 
         <dt>
@@ -32,7 +34,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RentingDetails.First().dateStart)            
+            @Model.RentingDetails.First().dateStart.ToString("dd/MM/yyyy")                  
         </dd>
 
 

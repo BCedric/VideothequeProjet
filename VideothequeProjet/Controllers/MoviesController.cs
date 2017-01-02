@@ -15,9 +15,34 @@ namespace VideothequeProjet.Controllers
         private ProjetVideoEntities _db = new ProjetVideoEntities();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(string field = "")
         {
-            var movies = (from m in _db.Movies orderby (m.title) select m).ToList();
+            List<Movies> movies;
+
+            switch (field)
+            {             
+                case "duration":
+                    movies = (from m in _db.Movies orderby (m.duration) select m).ToList();
+                    break;
+
+                case "year":
+                    movies = (from m in _db.Movies orderby (m.year) select m).ToList();
+                    break;
+                case "note":
+                    movies = (from m in _db.Movies orderby (m.note) descending select m).ToList();
+                    break;
+                case "director":
+                    movies = (from m in _db.Movies orderby (m.Directors.FirstOrDefault().lastName) select m).ToList();
+                    break;
+               
+                case "filmtype":
+                    movies = (from m in _db.Movies orderby (m.FilmTypes.FirstOrDefault().filmType) select m).ToList();
+                    break;                
+                default :
+                    movies = (from m in _db.Movies orderby (m.title) select m).ToList();
+                    break;
+            }
+             
             return View(movies);
         }
 

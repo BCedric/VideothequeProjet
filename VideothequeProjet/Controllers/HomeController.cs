@@ -8,9 +8,11 @@ using VideothequeProjet.Models;
 
 namespace VideothequeProjet.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
+        private ProjetVideoEntities _db = new ProjetVideoEntities();
 
         private IDal dal;
 
@@ -23,6 +25,7 @@ namespace VideothequeProjet.Controllers
             dal = dalIoc;
         }
 
+        [AllowAnonymous]
        public ActionResult Index()
        {
            UserViewModel viewModel = new UserViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
@@ -30,9 +33,12 @@ namespace VideothequeProjet.Controllers
             {
                 viewModel.user = dal.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             }
+
+           ViewBag.DvdLoues = (from rd in _db.RentingDetails where !rd.back select rd.DVD);
+           
             return View(viewModel);
        }
-
+        [AllowAnonymous]
         [HttpPost]
        public ActionResult Index(UserViewModel viewModel, string returnUrl)
         {
@@ -70,6 +76,19 @@ namespace VideothequeProjet.Controllers
         }
          * 
          * */
+
+        //GET: /Home/DvdRented
+        public ActionResult DvdRented()
+        {
+            return View((from rd in _db.RentingDetails where !rd.back orderby rd.dateEnd select rd).ToList());
+        }
+
+        public ActionResult topOrder()
+        {
+            var dvds = _db.Movies.OrderByDescending(m => _db.RentingDetails.Where(rd => rd.DVD.Movies.Equals(m)).Count()).ToList();
+            ViewBag.rentingDetails = _db.RentingDetails;
+            return View(dvds);
+        }
 
         public ActionResult Deconnexion()
         {

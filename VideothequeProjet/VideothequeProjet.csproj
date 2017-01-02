@@ -45,6 +45,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -246,6 +249,8 @@
     <Content Include="Views\Rentings\addDVD.cshtml" />
     <Content Include="Views\Rentings\Show.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Home\DvdRented.cshtml" />
+    <Content Include="Views\Home\topOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

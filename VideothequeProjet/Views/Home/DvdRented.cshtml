@@ -1,0 +1,63 @@
+﻿@model IEnumerable<VideothequeProjet.Models.RentingDetails>
+
+@{
+    ViewBag.Title = "DvdRented";
+}
+
+<h2>Dvd en cours de location</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Numéro de DVD
+        </th>
+        <th>
+            Titre
+        </th>
+
+
+        <th>
+            Emprunté par
+        </th>
+        <th>
+            Date de retour prévue
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {        
+        <tr>
+            <td>
+                @item.DVD.Movies.title
+            </td>
+
+            <td>
+                @item.DVD.Movies.title
+            </td>
+
+            <td>
+                <a href='@Url.Action("Details", "Customers", new { id = item.Rentings.customerID })'>
+                    @item.Rentings.Customers.firstName
+
+                    @item.Rentings.Customers.lastName
+                </a>
+               
+            </td>
+
+            <td
+                @if (item.dateEnd < DateTime.Today)
+                {
+                    @:style="color:red;"
+                }
+                >
+                @item.dateEnd.Value.ToString("dd/MM/yyyy")
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+

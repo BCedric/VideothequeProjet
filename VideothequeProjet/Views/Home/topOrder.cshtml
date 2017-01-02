@@ -1,0 +1,72 @@
+﻿@model IEnumerable<VideothequeProjet.Models.Movies>
+
+@{
+    ViewBag.Title = "Classement des films";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.duration)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            Nombre de location
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            <a href="@Url.Action("Details", "Movies", new { id = item.movieID })">
+                @Html.DisplayFor(modelItem => item.title)
+            </a>
+            
+        </td>
+        
+        <td>
+            
+            @{
+                int h = (int)(item.duration / 60);
+                int m = (int)item.duration % 60;
+
+            }
+            @h
+            h
+            @m
+        </td>
+        
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+
+        <td>
+            @{var cptLoc= 0;
+                foreach (var rd in @ViewBag.rentingDetails)
+                {
+                    if(rd.DVD.Movies.Equals(item)){
+                        cptLoc ++;
+                    }
+                }
+            
+            }
+            @cptLoc
+        </td>
+       
+    </tr>
+}
+
+</table>

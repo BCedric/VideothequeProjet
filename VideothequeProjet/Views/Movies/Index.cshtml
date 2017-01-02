@@ -13,29 +13,37 @@
     <tr>
         
         <th>            
-            @Html.DisplayNameFor(model => model.title)            
+            @Html.DisplayNameFor(model => model.title)   
+            <a href="@Url.Action("Index")"><span class="glyphicon glyphicon-chevron-up"></span></a>         
         </th>
         
         <th>
-            @Html.DisplayNameFor(model => model.duration) 
+            @Html.DisplayNameFor(model => model.duration)
+            <a href="@Url.Action("Index", new { field = "duration"})"><span class="glyphicon glyphicon-chevron-up"></span></a>         
+             
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.year) 
+            @Html.DisplayNameFor(model => model.year)
+            <a href="@Url.Action("Index", new { field = "year"})"><span class="glyphicon glyphicon-chevron-up"></span></a>                    
         </th>
         <th>
             @Html.DisplayNameFor(model => model.note) 
+            <a href="@Url.Action("Index", new { field = "note"})"><span class="glyphicon glyphicon-chevron-up"></span></a>                            
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Directors) 
+            <a href="@Url.Action("Index", new { field = "director"})"><span class="glyphicon glyphicon-chevron-up"></span></a>                           
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Actors) 
+            @Html.DisplayNameFor(model => model.Actors)
+            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FilmTypes) 
+            @Html.DisplayNameFor(model => model.FilmTypes)            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.price) 
+            @Html.DisplayNameFor(model => model.price)
+           
         </th>
         <th></th>
     </tr>
