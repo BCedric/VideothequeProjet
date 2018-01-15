@@ -11,7 +11,6 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Customers
     {
@@ -21,15 +20,10 @@ namespace VideothequeProjet.Models
         }
     
         public int customerID { get; set; }
-        [Display(Name = "Prénom")]
         public string firstName { get; set; }
-         [Display(Name = "Nom")]
         public string lastName { get; set; }
-         [Display(Name = "Adresse")]
         public string address { get; set; }
-         [Display(Name = "Numéro de téléphone")]
         public string phoneNumber { get; set; }
-         [Display(Name = "Adresse mail")]
         public string mailAddress { get; set; }
     
         public virtual ICollection<Rentings> Rentings { get; set; }

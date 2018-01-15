@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using VideothequeProjet.Models;
 using System.Data.Entity.Infrastructure;
 
+
 namespace VideothequeProjet.Controllers
 {
     [Authorize]
@@ -64,7 +65,7 @@ namespace VideothequeProjet.Controllers
 
         // POST: Movies/Create
         [HttpPost]
-        public ActionResult Create([Bind(Exclude = "MovieID")] Movies MoviesToCreate, int[] selectedTypes, string synopsis, int nbEx)
+        public ActionResult Create([Bind(Exclude = "MovieID")] Movies MoviesToCreate, int[] selectedTypes , string synopsis, int nbEx)
         {
             
             if (!ModelState.IsValid )
@@ -74,10 +75,14 @@ namespace VideothequeProjet.Controllers
             }
             try
             {
-                foreach (FilmTypes type in _db.FilmTypes.Where(type => selectedTypes.Contains(type.typeID) ))
-                {
-                    MoviesToCreate.FilmTypes.Add(type);
+                if (selectedTypes != null) {
+                    foreach (FilmTypes type in _db.FilmTypes.Where(type => selectedTypes.Contains(type.typeID)))
+                    {
+                        MoviesToCreate.FilmTypes.Add(type);
+                    }
                 }
+                
+                
 
                 int i = 0;
                 while (i < nbEx)
@@ -226,8 +231,7 @@ namespace VideothequeProjet.Controllers
         {
             var movie = _db.Movies.Find(id);
             ViewBag.movie = movie;
-            ViewBag.directors = (from d in _db.Directors orderby d.lastName select d);
-                
+            ViewBag.directors = (from d in _db.Directors orderby d.lastName select d);            
             return View(movie);
         }
 
@@ -242,7 +246,7 @@ namespace VideothequeProjet.Controllers
                 movie.Directors.Add(_db.Directors.Find(idDir));
             }                        
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Movies");
         }
 
         // GET: Movies/ActorEdit/5
@@ -266,7 +270,23 @@ namespace VideothequeProjet.Controllers
                 movie.Actors.Add(_db.Actors.Find(idAct));
             }
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult Search(string searchField)
+        {
+            
+            var result = _db.Movies.Where(m => m.title.ToLower().Contains(searchField.ToLower()));
+            /*    (from m in _db.Movies
+                          join a in _db.Actors on m equals a.Movies
+                          join d in _db.Directors on _db.Movies.ToList() equals d.Movies
+                          where  ||
+                          a.firstName.ToLower().Contains(searchField.ToLower()) ||
+                          a.lastName.ToLower().Contains(searchField.ToLower()) ||
+                          d.firstName.ToLower().Contains(searchField.ToLower()) ||
+                          d.lastName.ToLower().Contains(searchField.ToLower())
+                          select m);*/
+            return View("Index", result.ToList());
         }
 
         public bool estLoue(DVD dvd)
@@ -280,6 +300,8 @@ namespace VideothequeProjet.Controllers
             }
             return false;
         }
+
+
 
     }
 }

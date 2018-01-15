@@ -9,6 +9,11 @@
 <p>
     @Html.ActionLink("Ajouter un film", "Create", new object { }, new { @class = "btn btn-default" })
 </p>
+    <form action="@Url.Action("Search", "Movies")" method="get">
+        <input class="form-control" type="text" name="searchField" placeholder="Titre" /> <input class="btn btn-default" type="submit" value="Rechercher"/>
+    </form>
+    
+
 <table class="table">
     <tr>
         

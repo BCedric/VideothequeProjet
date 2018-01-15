@@ -97,8 +97,7 @@ CREATE TABLE Users (userID int NOT NULL IDENTITY(1,1),
 CREATE TABLE Rentings (rentingID int NOT NULL IDENTITY(1,1),
 					customerID int NOT NULL,
 					userID int NOT NULL,
-					dateStart date NOT NULL,
-					dateEnd date,
+					
 					cost decimal,
 					CONSTRAINT "PK_Renting" PRIMARY KEY CLUSTERED ("rentingID"),
 					CONSTRAINT "FK_RentingsAdmin" FOREIGN KEY ("userID") REFERENCES Users("userID"),
@@ -122,6 +121,8 @@ CREATE TABLE RentingDetails (RentingDetailsID int NOT NULL IDENTITY(1,1),
 					rentingID int NOT NULL,					
 					price decimal NOT NULL,
 					back bit NOT NULL DEFAULT 0,
+					dateStart date NOT NULL,
+					dateEnd date ,
 					CONSTRAINT "PK_RentingDetails" PRIMARY KEY CLUSTERED ("RentingDetailsID"),
 					CONSTRAINT "FK_RentingDetailsDVD" FOREIGN KEY ("DVDID") REFERENCES DVD("DVDID"),
 					CONSTRAINT "FK_RentingDetailsRenting" FOREIGN KEY ("rentingID") REFERENCES Rentings(rentingID)
@@ -214,12 +215,12 @@ INSERT INTO DVD (movieID) VALUES ('2');
 INSERT INTO DVD (movieID) VALUES ('3');
 INSERT INTO DVD (movieID) VALUES ('4');
 
-INSERT INTO Rentings(customerID, userID, dateStart, dateEnd, cost) VALUES ('1', '1', '2012-09-15','2012-10-15', '12');
-INSERT INTO Rentings(customerID, userID, dateStart, cost) VALUES ('1', '1', '2012-09-15', '12');
+INSERT INTO Rentings(customerID, userID, cost) VALUES ('1', '1',  '12');
+INSERT INTO Rentings(customerID, userID, cost) VALUES ('1', '1',  '12');
 
-INSERT INTO RentingDetails(DVDID, RentingID, price, back) VALUES ('1','1', '4', 'true');
-INSERT INTO RentingDetails(DVDID, RentingID, price, back) VALUES ('5','1', '8', 'true');
-INSERT INTO RentingDetails(DVDID, RentingID, price) VALUES ('1','1', '4');
+INSERT INTO RentingDetails(DVDID, RentingID, price,dateStart, dateEnd, back) VALUES ('1','1', '4','2012-09-15','2012-10-15', 'true');
+INSERT INTO RentingDetails(DVDID, RentingID, price,dateStart, dateEnd, back) VALUES ('5','1', '8','2012-09-15','2012-09-21', 'true');
+INSERT INTO RentingDetails(DVDID, RentingID, price,dateStart, dateEnd) VALUES ('1','1', '4','2014-06-13', '2014-06-28');
 
 INSERT INTO DirectorsMovie (MovieID, DirectorID) VALUES ('1','1');
 

@@ -11,7 +11,6 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Rentings
     {
@@ -23,13 +22,10 @@ namespace VideothequeProjet.Models
         public int rentingID { get; set; }
         public int customerID { get; set; }
         public int userID { get; set; }
-        [Display(Name = "Prix")]
         public Nullable<decimal> cost { get; set; }
-
-        [Display(Name = "Client")]
+    
         public virtual Customers Customers { get; set; }
         public virtual ICollection<RentingDetails> RentingDetails { get; set; }
-        [Display(Name = "Employé")]
         public virtual Users Users { get; set; }
     }
 }

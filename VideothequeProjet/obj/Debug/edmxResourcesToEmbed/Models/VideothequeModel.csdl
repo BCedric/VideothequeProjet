@@ -59,8 +59,8 @@
     <Property Name="synopsis" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="duration" Type="Int32" />
     <Property Name="year" Type="Int32" />
-    <Property Name="note" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="note" Type="Int32" />
+    <Property Name="price" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DVD" Relationship="Self.FK_DVDMovie" FromRole="Movies" ToRole="DVD" />
     <NavigationProperty Name="Actors" Relationship="Self.ActorsMovie" FromRole="Movies" ToRole="Actors" />
     <NavigationProperty Name="Directors" Relationship="Self.DirectorsMovie" FromRole="Movies" ToRole="Directors" />

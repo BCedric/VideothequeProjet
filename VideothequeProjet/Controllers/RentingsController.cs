@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using VideothequeProjet.Models;
 using System.Web.Security;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace VideothequeProjet.Controllers
 {
@@ -134,12 +136,7 @@ namespace VideothequeProjet.Controllers
             }
         }
 
-
-
-
-
         
-
         // GET: Rentings/DVDBack/5
         public ActionResult DVDBack(int rdid)
         {
@@ -151,5 +148,29 @@ namespace VideothequeProjet.Controllers
             return RedirectToAction("Details", "Customers", new { id = rd.Rentings.customerID });
         }
 
+        //GET Rentings/editBild/5
+        public ActionResult editBild(int id)
+        {
+            FolderBrowserDialog openDirDialog = new FolderBrowserDialog();
+
+            Thread thread_bug = new Thread(new ThreadStart(
+           delegate
+           {
+               DialogResult result = openDirDialog.ShowDialog();
+               if (!string.IsNullOrWhiteSpace(openDirDialog.SelectedPath))
+               {
+
+                   Rentings r = _db.Rentings.Find(id);
+                   PdfManager pdfM = new PdfManager(r, openDirDialog.SelectedPath);
+                   pdfM.generateBild();
+               }
+           }));
+            thread_bug.SetApartmentState(ApartmentState.STA);  /*<=*/
+            thread_bug.Start();
+           
+
+            
+            return RedirectToAction("Show", new { id = id });
+        }
     }
 }

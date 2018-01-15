@@ -22,7 +22,7 @@ namespace VideothequeProjet.Models
             this.Directors = new HashSet<Directors>();
             this.FilmTypes = new HashSet<FilmTypes>();
         }
-    
+
         public int movieID { get; set; }
         [Display(Name = "Titre")]
         public string title { get; set; }
@@ -33,9 +33,9 @@ namespace VideothequeProjet.Models
         [Display(Name = "Année de sortie")]
         public Nullable<int> year { get; set; }
         [Display(Name = "Note")]
-        public Nullable<decimal> note { get; set; }
+        public Nullable<int> note { get; set; }
         [Display(Name = "Prix")]
-        public decimal price { get; set; }
+        public int price { get; set; }
     
         public virtual ICollection<DVD> DVD { get; set; }
         public virtual ICollection<Actors> Actors { get; set; }

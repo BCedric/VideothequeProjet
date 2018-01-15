@@ -11,7 +11,6 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Directors
     {
@@ -19,12 +18,9 @@ namespace VideothequeProjet.Models
         {
             this.Movies = new HashSet<Movies>();
         }
-
-        
+    
         public int directorID { get; set; }
-        [Display(Name = "Prénom")]
         public string firstName { get; set; }
-        [Display(Name = "Nom")]
         public string lastName { get; set; }
         public string iconURL { get; set; }
     

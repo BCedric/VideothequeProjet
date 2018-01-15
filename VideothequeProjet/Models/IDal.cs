@@ -28,7 +28,12 @@ namespace VideothequeProjet.Models
         public Users Authentifier(string login, string motDePasse)
         {
             string motDePasseEncode = this.CalculateMD5Hash(motDePasse);
-            return (from a in _db.Users where a.password.ToLower() == motDePasseEncode.ToLower() where a.login == login select a).First();
+            var user = (from a in _db.Users where a.password.ToLower() == motDePasseEncode.ToLower() where a.login == login select a);
+            if (user.Count() == 0)
+            {
+                return null;
+            }
+            return user.First();
         }
 
         public Users ObtenirUtilisateur(int id)

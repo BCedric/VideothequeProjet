@@ -11,20 +11,15 @@ namespace VideothequeProjet.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class RentingDetails
     {
         public int RentingDetailsID { get; set; }
         public int DVDID { get; set; }
         public int rentingID { get; set; }
-        [Display(Name = "Prix")]
         public decimal price { get; set; }
-        [Display(Name = "Retour")]
         public bool back { get; set; }
-        [Display(Name = "Date de près")]
         public System.DateTime dateStart { get; set; }
-        [Display(Name = "Date de retour")]
         public Nullable<System.DateTime> dateEnd { get; set; }
     
         public virtual DVD DVD { get; set; }

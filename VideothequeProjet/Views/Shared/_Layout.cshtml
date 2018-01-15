@@ -20,12 +20,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar "></span>
                 </button>
-                @Html.ActionLink("VideoManager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("VideoManager", "Index", "Movies", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Vidéothèque", "Index", "Movies")</li>
-                    <li>@Html.ActionLink("Liste des utilisateurs", "Index", "Customers")</li>
+                    <li>@Html.ActionLink("Liste des clients", "Index", "Customers")</li>
                     <li>@Html.ActionLink("Liste des DVD empruntés", "DvdRented", "Home")</li>
                     <li>@Html.ActionLink("Classement des films", "topOrder", "Home")</li>
                     <li class="navbar-right">@Html.ActionLink("Déconnexion", "Deconnexion", "Home")</li>
